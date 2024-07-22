@@ -1,0 +1,238 @@
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 18pt;
+    font-style: normal;
+}
+
+.main {
+    width: 100%;
+}
+
+.btn {
+    border: none;
+    background-color: #f8993c;
+    color: white;
+    width: 80px;
+    height: 30px;
+    font-size: 11pt;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-right: 40px;
+    font-style: oblique;
+}
+
+.btn:hover {
+    color: #532f26;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #222;
+    height: 90px;
+    width: 100%;
+    align-items: center;
+}
+
+.logo {
+    width: 100px;
+    height: 55px;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+.lista {
+    margin-top: 50px;
+    justify-content: center;
+    align-items: center;
+    text-align: start;
+    border-radius: 10px;
+    height: 70%;
+    width: 60%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.218);
+}
+
+.topo {
+    height: 50px;
+    border-bottom: 0.5px solid rgb(190, 190, 190);
+    background-color: #f8993c;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    align-items: center;
+    justify-content: end;
+    display: flex;
+    text-align: end;
+}
+
+p {
+    margin-left: 20px;
+    font-size: 12pt;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.link_nav {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12pt;
+    text-align: end;
+    width: 30%;
+    align-items: end;
+    justify-content: space-evenly;
+    display: flex;
+    margin-right: 40px;
+}
+
+a:hover {
+    color: #f8993c;
+}
+
+.btn_deletar {
+    border: none;
+    background-color: white;
+    width: 100px;
+    height: 25px;
+    font-size: 11pt;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.campos {
+    height: 35px;
+    border-bottom: 0.5px solid rgb(190, 190, 190);
+    align-items: center;
+    justify-content: space-evenly;
+    display: flex;
+    font-size: medium;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+}
+
+.btn_deletar:hover {
+    color: #532f26;
+}
+
+.nomes {
+    width: 50%;
+    height: 550px;
+    border-right: 0.5px solid rgb(190, 190, 190);
+}
+
+.contatos {
+    width: 50%;
+    height: 550px;
+}
+
+.resultados {
+    display: flex;
+}
+
+.con_modal {
+    background-color: rgba(0, 0, 0, 0.695);
+    width: 100%;
+    height: 100%;
+}
+
+.center_modal {
+    border-right: 0.5px solid rgb(190, 190, 190);
+    background-color: #f2f2f2;
+    border-radius: 20px;
+    height: 50%;
+    width: 35%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn_fechar {
+    border: none;
+    background-color: rgb(165, 9, 9);
+    color: white;
+    width: 70px;
+    height: 28px;
+    font-size: 11pt;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn_fechar:hover {
+    background-color: rgba(165, 9, 9, 0.688);
+}
+
+.topo_modal {
+    height: 55px;
+    align-items: end;
+    text-align: end;
+    justify-content: end;
+    display: flex;
+}
+
+.titulo h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    margin-left: 50px;
+}
+
+.dados {
+    margin-top: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;       
+}
+
+.input {
+    width: 350px;
+    border-radius: 5px;
+    border: none;
+    border: 0.5px solid rgb(190, 190, 190);
+    margin-bottom: 20px;
+    padding: 8px;
+}
+
+.input:focus {
+    outline: 0;
+}
+
+.input:hover {
+    background-color: rgba(128, 128, 128, 0.204);
+}
+
+label {
+    font-size: 14pt; 
+    margin-bottom: 5px;
+}
+
+.botao {
+    margin-top: 40px;
+    border: none;
+    background-color: #f8993c;
+    color: white;
+    width: 115px;
+    height: 35px;
+    font-size: 11pt;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.botao:hover {
+    color: black;
+}
+
+.btn_salvar {
+    width: 100%;
+    text-align: end;
+    margin-right: 100px;
+}
