@@ -13,10 +13,8 @@ export default function AuthProvider({ children }) {
 
     function SignIn(email, senha) {
 
-        console.log({ email })
-
         signInWithEmailAndPassword(auth, email, senha)
-            .then((result) => {
+            .then(() => {
                 console.log("Você está logado!");
                 setIsSignIn(true);
                 Navigate("/home")  
