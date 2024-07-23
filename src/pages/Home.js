@@ -4,10 +4,12 @@ import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ContatoContext } from '../contexts/contatos'
 import Modal from "react-modal"
+import { FaTrashAlt } from "react-icons/fa";
+import { RiEditFill } from "react-icons/ri";
 
 export default function Home() {
 
-    const { BuscarContatos, listaContatos, DeletarDoc } = useContext(ContatoContext)
+    const { BuscarContatos, listaContatos, DeletarDoc, SubmitData } = useContext(ContatoContext)
 
     const { Logout } = useContext(AuthContext)
 
@@ -26,6 +28,17 @@ export default function Home() {
 
     function ModalClosed() {
         setIsOpen(false)
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        SubmitData(nome, contato)
+        BuscarContatos()   
+    }
+
+    function Deletar(id) {
+        DeletarDoc(id);
+        BuscarContatos()   
     }
 
     return (
@@ -67,12 +80,12 @@ export default function Home() {
                             </div>
                             <div className={styles.titulo}>
                                 <h2>Insira os dados:</h2>
-                                <form className={styles.form}>
+                                <form onSubmit={handleSubmit} className={styles.form}>
                                     <div className={styles.dados}>
-                                        <label>Nome:</label>
-                                        <input className={styles.input} type="text" name="nome" id="nome" onChange={(e) => setNome(e.target.value)}></input>
-                                        <label>Contato:</label>
-                                        <input className={styles.input} type="text" name="contato" id="contato" onChange={(e) => setContato(e.target.value)}></input>
+                                        <label className={styles.label_dados}>Nome:</label>
+                                        <input className={styles.input} value={nome} type="text" name="nome" id="nome" onChange={(e) => setNome(e.target.value)}></input>
+                                        <label className={styles.label_dados}>Contato:</label>
+                                        <input className={styles.input} value={contato} type="text" name="contato" id="contato" onChange={(e) => setContato(e.target.value)}></input>
                                     </div>
                                     <div className={styles.btn_salvar}>
                                         <button type="submit" className={styles.botao}>Salvar</button>
@@ -82,9 +95,6 @@ export default function Home() {
 
                         </div>
                     </Modal>
-
-
-                    <button onClick={DeletarDoc} className={styles.btn_deletar}>Deletar lista</button>
                 </div>
 
                 <div className={styles.campos}>
@@ -96,18 +106,29 @@ export default function Home() {
                     <div className={styles.nomes}>
                         {listaContatos && listaContatos.map((item, index) => {
                             return (
-                                <p key={index}>
-                                    {item.nome}
-                                </p>
+                                <div className={styles.p_nomes}>
+                                    <p key={index}>
+                                        {item.nome}
+
+                                    </p>
+                                </div>
                             )
                         })}
                     </div>
                     <div className={styles.contatos}>
                         {listaContatos && listaContatos.map((item, index) => {
                             return (
-                                <p key={index}>
-                                    {item.contato}
-                                </p>
+                                <div className={styles.contato_icons}>
+                                    <div className={styles.p_contato}>
+                                        <p key={index} >
+                                            {item.contato}
+                                        </p>
+                                    </div>
+                                    <div className={styles.icones}>
+                                        <FaTrashAlt onClick={() => Deletar(item.id)} className={styles.trash} />
+                                        <RiEditFill className={styles.edit} />
+                                    </div>
+                                </div>
                             )
                         })}
                     </div>

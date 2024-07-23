@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react'
-import { collection, getDocs, query, doc, setDoc, deleteDoc } from 'firebase/firestore'
+import { collection, getDocs, query, doc, setDoc, deleteDoc, addDoc } from 'firebase/firestore'
 import { db } from '../services/firebaseConnection'
 
 export const ContatoContext = createContext({})
@@ -45,18 +45,29 @@ export default function ContatoProvider({ children }) {
             .catch((err) => console.log(err))
     }
 
-    async function DeletarDoc() {
+    async function DeletarDoc(id) {
 
-        await deleteDoc(doc(db, "contatos", "contatos_teste"))
+        await deleteDoc(doc(db, "contatos", id))
             .then((resul) => {
                 alert("documento deletado")
             })
             .catch((err) => console.log(err))
     }
 
+    async function SubmitData(nome, contato) {
+
+        await addDoc(ContatosRef, {
+            nome: nome,
+            contato: contato
+        })
+        .then((resul) => {
+            alert("Contato adicionado");
+        })
+            .catch((err) => console.log(err))
+    }
 
     return (
-        <ContatoContext.Provider value={{ teste: "ok", BuscarContatos, CriarContatos, listaContatos, DeletarDoc }}>
+        <ContatoContext.Provider value={{ teste: "ok", BuscarContatos, listaContatos, DeletarDoc, SubmitData }}>
             {children}
         </ContatoContext.Provider>
     )
