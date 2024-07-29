@@ -6,10 +6,13 @@ import { ContatoContext } from '../contexts/contatos'
 import Modal from "react-modal"
 import { FaTrashAlt } from "react-icons/fa";
 import { RiEditFill } from "react-icons/ri";
+import { IMaskInput } from "react-imask";
+
+
 
 export default function Home() {
 
-    const { BuscarContatos, listaContatos, DeletarDoc, SubmitData } = useContext(ContatoContext)
+    const { BuscarContatos, listaContatos, DeletarDoc, SubmitData, AtualizarDoc } = useContext(ContatoContext)
 
     const { Logout } = useContext(AuthContext)
 
@@ -18,9 +21,24 @@ export default function Home() {
 
     const [modalIsOpen, setIsOpen] = useState(false)
 
+    const [modalDeletar, setModalDeletar] = useState(false)
+
+    const [itemSelected, setItemSelected] = useState()
+
+    const [userAction, setUserAction] = useState()
+
     useEffect(() => {
         BuscarContatos()
     }, [])
+
+    function ModalDeletarAberto(id) {
+        setItemSelected(id)
+        setModalDeletar(true)
+    }
+
+    function ModalDeletarFechado() {
+        setModalDeletar(false)
+    }
 
     function ModalOpen() {
         setIsOpen(true)
@@ -30,15 +48,43 @@ export default function Home() {
         setIsOpen(false)
     }
 
-    function handleSubmit(e) {
+    function HandleSubmit(e) {
+
         e.preventDefault();
-        SubmitData(nome, contato)
-        BuscarContatos()   
+        if (userAction == "edit") {
+            AtualizarDoc(itemSelected, nome, contato);
+            console.log("editar ok")
+        } else {
+            SubmitData(nome, contato)
+        }
+        BuscarContatos();
+        LimparDados()
+        ModalClosed()
     }
 
     function Deletar(id) {
         DeletarDoc(id);
-        BuscarContatos()   
+        BuscarContatos()
+        ModalDeletarFechado()
+    }
+
+    function LimparDados() {
+        setNome("");
+        setContato("");
+    }
+
+    function OpenModalWithEdit(item) {
+        setNome(item.nome);
+        setContato(item.contato);
+        setItemSelected(item.id)
+        ModalOpen();
+        setUserAction("edit");
+    }
+
+    function OpenModalWithCreate() {
+        ModalOpen();
+        LimparDados();
+        setUserAction("create")
     }
 
     return (
@@ -68,11 +114,12 @@ export default function Home() {
             <div className={styles.lista}>
 
                 <div className={styles.topo}>
-                    <button className={styles.btn_deletar} onClick={ModalOpen} >Adicionar</button>
+                    <button className={styles.btn_deletar} onClick={() => OpenModalWithCreate()}>Adicionar</button>
                     <Modal className={styles.con_modal}
                         isOpen={modalIsOpen}
                         onRequestClose={ModalClosed}
                         contentLabel="Adicionar"
+                        ariaHideApp={false}
                     >
                         <div className={styles.center_modal}>
                             <div className={styles.topo_modal}>
@@ -80,19 +127,30 @@ export default function Home() {
                             </div>
                             <div className={styles.titulo}>
                                 <h2>Insira os dados:</h2>
-                                <form onSubmit={handleSubmit} className={styles.form}>
+
+                                <form onSubmit={HandleSubmit} className={styles.form}>
                                     <div className={styles.dados}>
+
                                         <label className={styles.label_dados}>Nome:</label>
-                                        <input className={styles.input} value={nome} type="text" name="nome" id="nome" onChange={(e) => setNome(e.target.value)}></input>
+
+                                        <input className={styles.input} value={nome} type="text" name="nome" id="nome" onChange={(e) => setNome(e.target.value)}
+                                       
+                                
+                                        ></input>
+                                   
+
                                         <label className={styles.label_dados}>Contato:</label>
-                                        <input className={styles.input} value={contato} type="text" name="contato" id="contato" onChange={(e) => setContato(e.target.value)}></input>
+
+                                        <IMaskInput className={styles.input} mask="(00) 00000-0000"
+                                            placeholder='(00) 00000-0000' value={contato} type="text" name="contato" id="contato" onChange={(e) => setContato(e.target.value)}></IMaskInput>
+
                                     </div>
                                     <div className={styles.btn_salvar}>
                                         <button type="submit" className={styles.botao}>Salvar</button>
                                     </div>
                                 </form>
-                            </div>
 
+                            </div>
                         </div>
                     </Modal>
                 </div>
@@ -106,10 +164,9 @@ export default function Home() {
                     <div className={styles.nomes}>
                         {listaContatos && listaContatos.map((item, index) => {
                             return (
-                                <div className={styles.p_nomes}>
-                                    <p key={index}>
+                                <div key={index} className={styles.p_nomes}>
+                                    <p>
                                         {item.nome}
-
                                     </p>
                                 </div>
                             )
@@ -118,19 +175,39 @@ export default function Home() {
                     <div className={styles.contatos}>
                         {listaContatos && listaContatos.map((item, index) => {
                             return (
-                                <div className={styles.contato_icons}>
+                                <div key={index} className={styles.contato_icons}>
                                     <div className={styles.p_contato}>
-                                        <p key={index} >
+                                        <p>
                                             {item.contato}
                                         </p>
                                     </div>
                                     <div className={styles.icones}>
-                                        <FaTrashAlt onClick={() => Deletar(item.id)} className={styles.trash} />
-                                        <RiEditFill className={styles.edit} />
+                                        <FaTrashAlt onClick={() => ModalDeletarAberto(item.id)} className={styles.trash} />
+                                        <RiEditFill onClick={() => OpenModalWithEdit(item)} className={styles.edit} />
                                     </div>
                                 </div>
                             )
                         })}
+                        <Modal className={styles.con_modal}
+                            isOpen={modalDeletar}
+                            onRequestClose={ModalDeletarFechado}
+                            contentLabel="Deletar"
+                            ariaHideApp={false}
+                        >
+                            <div className={styles.center_modalDeletar}>
+                                <h1>Atenção!</h1>
+
+                                <div className={styles.confirmacao}>
+                                    <p>Deseja mesmo deletar esse contato?</p>
+                                </div>
+
+                                <div className={styles.buttons}>
+                                    <button className={styles.btn_cancelar} onClick={ModalDeletarFechado}>Cancelar</button>
+                                    <button className={styles.btn_confirmar} onClick={() => Deletar(itemSelected)}>Confirmar</button>
+                                </div>
+
+                            </div>
+                        </Modal>
                     </div>
                 </div>
             </div>

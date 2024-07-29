@@ -119,7 +119,7 @@ a:hover {
 
 .nomes {
     width: 50%;
-    height: 550px;
+    height: 100%;
     border-right: 0.5px solid rgb(190, 190, 190);
 }
 
@@ -130,6 +130,7 @@ a:hover {
 
 .resultados {
     display: flex;
+    height: 86.5%;
 }
 
 .con_modal {
@@ -268,4 +269,74 @@ a:hover {
 
 .p_nomes {
     height: 33px;
+}
+
+.btn_confirmar {
+    border: none;
+    background-color: rgb(32, 96, 45);
+    color: white;
+    width: 100px;
+    height: 35px;
+    font-size: 12pt;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn_confirmar:hover {
+    background-color: rgba(32, 96, 45, 0.764);
+}
+
+.btn_cancelar {
+    border: none;
+    background-color: rgb(165, 9, 9);
+    color: white;
+    width: 100px;
+    height: 35px;
+    font-size: 12pt;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn_cancelar:hover {
+    background-color: rgba(165, 9, 9, 0.688);
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.confirmacao {
+    width: 100%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10%;
+}
+
+.confirmacao p {
+    font-size: 14pt;
+    margin-left: 0;
+}
+
+button {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.center_modalDeletar {
+    border-right: 0.5px solid rgb(190, 190, 190);
+    background-color: #f2f2f2;
+    border-radius: 20px;
+    height: 35%;
+    width: 30%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.mensagem_erro {
+    color: red;
+    margin-left: 10px;
 }

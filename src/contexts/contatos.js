@@ -1,6 +1,8 @@
 import { createContext, useState } from 'react'
-import { collection, getDocs, query, doc, setDoc, deleteDoc, addDoc } from 'firebase/firestore'
+import { collection, getDocs, query, doc, deleteDoc, addDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../services/firebaseConnection'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const ContatoContext = createContext({})
 
@@ -23,7 +25,6 @@ export default function ContatoProvider({ children }) {
                         nome: doc.data().nome,
                         contato: doc.data().contato
                     })
-                    console.log(doc.data())
                     setListaContatos(lista)
 
                 })
@@ -31,25 +32,25 @@ export default function ContatoProvider({ children }) {
             .catch((err) => console.log(err))
     }
 
-    async function CriarContatos() {
+    async function DeletarDoc(id) {
 
-        await setDoc(doc(db, "contatos", "contatos_teste"), {
-            nome: "Soraya",
-            idade: 54,
-            cancelado: false,
-            contato: "(47) 99185-9902"
-        })
-            .then((resul) => {
-                console.log("documento criado")
+        await deleteDoc(doc(db, "contatos", id))
+            .then(() => {
+                toast.success("Contato deletado com sucesso!")
             })
             .catch((err) => console.log(err))
     }
 
-    async function DeletarDoc(id) {
+    async function AtualizarDoc(id, nome, contato) {
 
-        await deleteDoc(doc(db, "contatos", id))
-            .then((resul) => {
-                alert("documento deletado")
+        console.log(id, nome, contato)
+
+        await updateDoc(doc(db, "contatos", id), {
+            nome: nome,
+            contato: contato
+        })
+            .then(() => {
+                toast.success("Contato atualizado com sucesso!")
             })
             .catch((err) => console.log(err))
     }
@@ -60,14 +61,14 @@ export default function ContatoProvider({ children }) {
             nome: nome,
             contato: contato
         })
-        .then((resul) => {
-            alert("Contato adicionado");
+        .then(() => {
+            toast.success("Contato adicionado!");
         })
             .catch((err) => console.log(err))
     }
 
     return (
-        <ContatoContext.Provider value={{ teste: "ok", BuscarContatos, listaContatos, DeletarDoc, SubmitData }}>
+        <ContatoContext.Provider value={{ teste: "ok", BuscarContatos, listaContatos, DeletarDoc, SubmitData, AtualizarDoc }}>
             {children}
         </ContatoContext.Provider>
     )
